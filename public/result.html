@@ -2,12 +2,42 @@
 <html>
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<link rel="stylesheet" src="assets/css.css">
+<link rel="stylesheet" href="css/css.css">
 </head>
 <body>
+<h1>Your Pet!</h1>
+<ul>
+<li id="name">Name: </li>    
+<li id="animal">Animal: </li>
+<li id="personality">Personality: </li>
+<li id="picture"></li>
+</ul>
 
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
+var userArray = [];
+var winScore = 500;
+var winnerIndex;
+$.get("/api/users", function (data){
+    var thisIndex = data.length - 1;
+    userArray = data[thisIndex].survey;
+});
+
+$.get("/api/pets", function (data) {   
+    for (i=0;i<data.length;i++){
+        var newScore = Math.abs(data[i].survey[0] - userArray[0]) + Math.abs(data[i].survey[1] - userArray[1]) + Math.abs(data[i].survey[2] - userArray[2]) + Math.abs(data[i].survey[3] - userArray[3]) + Math.abs(data[i].survey[4] - userArray[4]);
+        if(newScore<winScore){
+            winScore = newScore;
+            winnerIndex = i;}
+            
+    }
+    
+$("#name").append(data[winnerIndex].name);
+$("#animal").append(data[winnerIndex].type);
+$("#personality").append(data[winnerIndex].personality);
+$("#picture").html(data[winnerIndex].picture);
+});
+
 </script>
 </body>
 </html>

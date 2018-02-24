@@ -1,13 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<link rel="stylesheet" src="assets/css.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/css.css">
 </head>
+
 <body>
+<div class="container">
 
+<div class="row">
+    <h5>Please enter your name.</h5>
+    <input type="text" id="name" class="box">
+</div>
+
+<div class="row">
+    <h5>Please enter your email or phone, whichever is better to contact you!</h5>
+    <input type="text" id="contact" class="box">
+</div>
+
+    <div class="row">
+        <h5>I like to run around and play fetch.</h5>
+        <label class="radio-inline"><input class="one" type="radio" name="optradio1" value="1">1</label>
+        <label class="radio-inline"><input class="one" type="radio" name="optradio1" value="2">2</label>
+        <label class="radio-inline"><input class="one" type="radio" name="optradio1" value="3">3</label>
+        <label class="radio-inline"><input class="one" type="radio" name="optradio1" value="4">4</label>
+        <label class="radio-inline"><input class="one" type="radio" name="optradio1" value="5">5</label>
+    </div>
+
+    <div class="row">
+        <h5>If I could, I would eat the entire kitchen.</h5>
+        <label class="radio-inline"><input class="two" type="radio" name="optradio2" value="1">1</label>
+        <label class="radio-inline"><input class="two" type="radio" name="optradio2" value="2">2</label>
+        <label class="radio-inline"><input class="two" type="radio" name="optradio2" value="3">3</label>
+        <label class="radio-inline"><input class="two" type="radio" name="optradio2" value="4">4</label>
+        <label class="radio-inline"><input class="two" type="radio" name="optradio2" value="5">5</label>
+    </div>
+
+    <div class="row">
+        <h5>Rules are made to be broken.</h5>
+        <label class="radio-inline"><input class="three" type="radio" name="optradio3" value="1">1</label>
+        <label class="radio-inline"><input class="three" type="radio" name="optradio3" value="2">2</label>
+        <label class="radio-inline"><input class="three" type="radio" name="optradio3" value="3">3</label>
+        <label class="radio-inline"><input class="three" type="radio" name="optradio3" value="4">4</label>
+        <label class="radio-inline"><input class="three" type="radio" name="optradio3" value="5">5</label>
+    </div>
+
+    <div class="row">
+        <h5>I get along with all kinds of animals.</h5>
+        <label class="radio-inline"><input class="four" type="radio" name="optradio4" value="1">1</label>
+        <label class="radio-inline"><input class="four" type="radio" name="optradio4" value="2">2</label>
+        <label class="radio-inline"><input class="four" type="radio" name="optradio4" value="3">3</label>
+        <label class="radio-inline"><input class="four" type="radio" name="optradio4" value="4">4</label>
+        <label class="radio-inline"><input class="four" type="radio" name="optradio4" value="5">5</label>
+    </div>
+
+    <div class="row">
+        <h5>Nap time? Every time is nap time.</h5>
+        <label class="radio-inline"><input class="five" type="radio" name="optradio5" value="1">1</label>
+        <label class="radio-inline"><input class="five" type="radio" name="optradio5" value="2">2</label>
+        <label class="radio-inline"><input class="five" type="radio" name="optradio5" value="3">3</label>
+        <label class="radio-inline"><input class="five" type="radio" name="optradio5" value="4">4</label>
+        <label class="radio-inline"><input class="five" type="radio" name="optradio5" value="5">5</label>
+    </div>
+
+<button id="submit">Submit!</button>
+<a href="/result">Check out the result!</a>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
+var one, two, three, four, five;
 
+$(document).on("click",".one",function(){   one = $(this).val()     ;});
+$(document).on("click",".two",function(){   two = $(this).val()     ;});
+$(document).on("click",".three",function(){ three = $(this).val()   ;});
+$(document).on("click",".four",function(){  four = $(this).val()    ;});
+$(document).on("click",".five",function(){  five = $(this).val()    ;});
+
+$(document).on("click","#submit",function(){
+    var theName = $("#name").val();
+    var theContact = $("#contact").val();
+    var newUser = {
+        name: theName,
+        contact: theContact,
+        survey: [one,two,three,four,five]   };
+    if(one&&two&&three&&four&&five){
+    $.post("/api/users",newUser);
+    alert("You've been added " + newUser.name);   }
+
+
+    else{
+        alert("Complete ALL questions please");
+    };
+});
 </script>
 </body>
+
 </html>
